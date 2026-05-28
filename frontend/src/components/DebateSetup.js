@@ -199,7 +199,6 @@ function AgentCard({ side, stance }) {
   return (
     <div style={{
       background: 'var(--surface)',
-      borderLeft: `4px solid ${isAxiom ? 'var(--red)' : 'var(--blue)'}`,
       border: '1px solid var(--border)',
       borderLeft: `4px solid ${isAxiom ? 'var(--red)' : 'var(--blue)'}`,
       minHeight: 200,
