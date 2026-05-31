@@ -47,7 +47,7 @@ export default function Leaderboard({ onSelectDebate, onReplayDebate }) {
       {loading && (
         <div style={centeredState}>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'var(--text-muted)', animation: 'glowPulse 1.5s ease-in-out infinite', letterSpacing: '0.08em' }}>
-            LOADING...
+            LOADING DEBATES...
           </p>
         </div>
       )}

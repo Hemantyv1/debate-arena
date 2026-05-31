@@ -26,7 +26,7 @@ export default function TranscriptView({ debateId, onSimilarDebate, onBack }) {
   if (error) {
     return (
       <div style={{ minHeight: 'calc(100vh - 56px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--red)' }}>ERR: {error}</p>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--red)' }}>Could not load transcript.</p>
         <button onClick={onBack} style={backBtnStyle}>← BACK</button>
       </div>
     );

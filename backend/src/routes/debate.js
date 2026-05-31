@@ -40,9 +40,15 @@ const reactLimiter = rateLimit({
 });
 
 const voteLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 3,
-  message: { error: 'Too many votes. Try again in an hour.' },
+  windowMs: 60 * 1000,
+  max: 10,
+  message: { error: 'Too many votes.' },
+});
+
+const spectatorLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  message: { error: 'Too many requests.' },
 });
 
 const roundLimiter = rateLimit({
@@ -300,14 +306,14 @@ router.get('/:id/reactions', async (req, res) => {
 });
 
 // ── GET /api/debate/:id/spectators ───────────────────────────────────────────
-router.get('/:id/spectators', (req, res) => {
+router.get('/:id/spectators', spectatorLimiter, (req, res) => {
   const { id } = req.params;
   if (!isUUID(id)) return res.status(400).json({ error: 'Invalid debate ID.' });
   res.json({ count: debateSpectators.get(id) || 0 });
 });
 
 // ── POST /api/debate/:id/spectators/join ──────────────────────────────────────
-router.post('/:id/spectators/join', (req, res) => {
+router.post('/:id/spectators/join', spectatorLimiter, (req, res) => {
   const { id } = req.params;
   if (!isUUID(id)) return res.status(400).json({ error: 'Invalid debate ID.' });
   const next = (debateSpectators.get(id) || 0) + 1;
@@ -316,7 +322,7 @@ router.post('/:id/spectators/join', (req, res) => {
 });
 
 // ── POST /api/debate/:id/spectators/leave ─────────────────────────────────────
-router.post('/:id/spectators/leave', (req, res) => {
+router.post('/:id/spectators/leave', spectatorLimiter, (req, res) => {
   const { id } = req.params;
   if (!isUUID(id)) return res.status(400).json({ error: 'Invalid debate ID.' });
   const next = Math.max(0, (debateSpectators.get(id) || 0) - 1);

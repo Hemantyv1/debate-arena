@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import DOMPurify from 'dompurify';
 import { getTranscript } from '../api';
 
 const CHAR_MS = 18;
@@ -246,7 +247,7 @@ function ReplayPanel({ agent, chunks, active, currentRound }) {
 function ReplayArgEntry({ chunk, accent }) {
   const showCursor = chunk.active && chunk.text;
   const showStandby = chunk.waiting && !chunk.text;
-  const html = window.marked?.parse(chunk.text || '') || chunk.text || '';
+  const html = DOMPurify.sanitize(window.marked?.parse(chunk.text || '') || chunk.text || '');
 
   return (
     <div style={{ marginBottom: 28, opacity: 0, animation: 'fadeSlideUp 0.4s ease forwards' }}>

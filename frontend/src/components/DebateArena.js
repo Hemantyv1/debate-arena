@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import DOMPurify from 'dompurify';
 import { openRoundStream, vote, postReaction, BASE, joinSpectators, leaveSpectators, getSpectators, postRoundVote, getRoundVotes } from '../api';
 import { speakAs } from '../utils/agentVoices';
 
@@ -534,7 +535,7 @@ function ArgumentEntry({ chunk, accent, debateId, agentSide }) {
 
   const renderText = () => {
     if (showStandby) return null;
-    const html = window.marked?.parse(chunk.text || '') || chunk.text || '';
+    const html = DOMPurify.sanitize(window.marked?.parse(chunk.text || '') || chunk.text || '');
     return (
       <div
         className="md-content"
@@ -756,7 +757,7 @@ function BottomBar({ topic, status, currentRound, nextRound, onNextRound, errorM
         {status === 'error' && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'var(--red)' }}>
-              ERR: {errorMsg}
+              Something went wrong. Please try again.
             </span>
             <button onClick={onRetry} style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 13, color: 'var(--red)', background: 'none', border: '1px solid var(--red)', padding: '4px 12px', cursor: 'pointer' }}>
               RETRY
