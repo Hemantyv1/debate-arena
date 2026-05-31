@@ -57,6 +57,12 @@ const roundLimiter = rateLimit({
   message: { error: 'Too many round requests. Try again in an hour.' },
 });
 
+const debateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 10,
+  message: { error: 'Debate limit reached. Try again later.' },
+});
+
 // ── POST /api/debate/start ────────────────────────────────────────────────────
 router.post('/start', startLimiter, async (req, res) => {
   const result = sanitizeTopic(req.body?.topic);
@@ -91,7 +97,7 @@ router.post('/start', startLimiter, async (req, res) => {
 });
 
 // ── GET /api/debate/:id/round — SSE streaming ────────────────────────────────
-router.get('/:id/round', roundLimiter, async (req, res) => {
+router.get('/:id/round', debateLimiter, roundLimiter, async (req, res) => {
   const { id } = req.params;
 
   // Validate UUID before touching Supabase
