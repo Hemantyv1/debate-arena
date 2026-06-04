@@ -26,21 +26,6 @@ npm install && npm run dev
 cd frontend && npm install && npm start
 ```
 
-## Environment Variables
-
-Create `backend/.env` with the following:
-
-```
-ANTHROPIC_API_KEY=your_anthropic_api_key
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-PORT=3001
-```
-
-## Database
-
-Run `backend/supabase-schema.sql` in the Supabase SQL editor to create the tables, RLS policies, and the `increment_vote` RPC function.
-
 ## Live Demo
 
 - Frontend: https://debate-arena-i28s.vercel.app
